@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 星空跨年露營精選</title>
+    <style>
+        /* --- 星空版 Apple 風格設定 --- */
+        :root {
+            --bg-color-start: #0f0c29;
+            --bg-color-mid: #302b63;
+            --bg-color-end: #24243e;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1a6;
+            --link-blue: #2997ff;
+            
+            /* 玻璃擬態卡片設定 */
+            --card-glass-bg: rgba(40, 40, 55, 0.65);
+            --card-border: 1px solid rgba(255, 255, 255, 0.15);
+            --card-shadow: 0 25px 50px rgba(0,0,0, 0.5);
+            --blur-effect: blur(20px) saturate(180%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-mid), var(--bg-color-end));
+            min-height: 100vh;
+            margin: 0;
+            padding: 60px 20px;
+            color: var(--text-primary);
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 4px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 70px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ffffff, #b3c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(179, 198, 255, 0.5);
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- 卡片設計 --- */
+        .card {
+            background-color: var(--card-glass-bg);
+            backdrop-filter: var(--blur-effect);
+            -webkit-backdrop-filter: var(--blur-effect);
+            border: var(--card-border);
+            box-shadow: var(--card-shadow);
+            border-radius: 28px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 35px 70px rgba(0,0,0, 0.6), 0 0 20px rgba(100, 150, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 10;
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 250px;
+            background-color: rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+        
+        .card:hover img {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .address-text {
+            font-size: 14px;
+            color: #d1d1d6;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
+        }
+        
+        .address-text::before {
+            content: "📍 ";
+            margin-right: 5px;
+        }
+
+        .tags {
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 25px;
+            flex-grow: 1; /* 讓文字區塊填滿空間，保持按鈕在底部對齊 */
+        }
+
+        /* --- 地圖樣式 --- */
+        .map-container {
+            width: 100%;
+            height: 180px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            background: #2c2c2e;
+        }
+        
+        .map-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(20%) contrast(90%);
+            transition: filter 0.3s;
+        }
+
+        .card:hover .map-frame {
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        /* --- 按鈕區 --- */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: auto; /* 將按鈕推到底部 */
+        }
+
+        .btn-action {
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-map {
+            background-color: rgba(58, 58, 60, 0.8);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .btn-map:hover {
+            background-color: rgba(80, 80, 80, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .btn-web {
+            background: linear-gradient(to right, #2997ff, #0066cc);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(41, 151, 255, 0.3);
+        }
+
+        .btn-web:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(41, 151, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 40px 15px; }
+            h1 { font-size: 36px; }
+            .card-img-top { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>飛越2025 迎接 2026</h1>
+    <p class="subtitle">在 2025 的最後一夜，<br>哪裡是我們迎接新年的最佳起點？</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <div class="card-img-top">
+            <img src="https://www.camptrip.com.tw/wp-content/uploads/ewqerfc.jpg" alt="小份美營地">
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">小份美營地</h2>
+            <div class="address-text">苗栗縣三灣鄉內灣村小份美20-1號</div>
+            <div class="tags">
+                <span class="tag">星空派對</span>
+                <span class="tag">低海拔</span>
+                <span class="tag">輕鬆跨年</span>
+            </div>
+            
+            <div class="map-container">
+                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3611.838531278189!2d120.9508056!3d24.6704444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346851e3e0c0a8e1%3A0x1c8b3f8f1c8b3f8f!2z5bCP5Lu9576O6Ie_54ef5Y2A!5e0!3m2!1szh-TW!2stw!4v1672300000000!5m2!1szh-TW!2stw" loading="lazy"></iframe>
+            </div>
+
+            <p class="card-text">
+                位於低海拔，交通最輕鬆。寬廣的大草皮適合圍著營火、仰望星空倒數，舉辦溫馨的跨年派對。
+            </p>
+            
+            <div class="action-buttons">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=小份美營地" target="_blank" class="btn-action btn-map">📍 導航去</a>
+                <a href="https://booking.camptrip.com.tw/hotel/%E5%B0%8F%E4%BB%BD%E7%BE%8E%E7%87%9F%E5%9C%B0" target="_blank" class="btn-action btn-web">🔗 立即訂位</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-img-top">
+            <img src="https://res.klook.com/image/upload/w_1265,h_791,c_fill,q_85/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/iwmpt8xifah0tveiw0ju.webp" alt="桃樂絲露營區">
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">桃樂絲露營區</h2>
+            <div class="address-text">苗栗縣公館鄉尖山40之5號</div>
+            <div class="tags">
+                <span class="tag">奢華觀星</span>
+                <span class="tag">暖氣帳篷</span>
+                <span class="tag">優雅跨年</span>
+            </div>
+
+            <div class="map-container">
+                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.123456789!2d120.8400000!3d24.5500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34684a1234567890%3A0x1234567890abcdef!2z5qGD5qCC577y6Ie_54ef5Y2A!5e0!3m2!1szh-TW!2stw!4v1672300000000!5m2!1szh-TW!2stw" loading="lazy"></iframe>
+            </div>
+
+            <p class="card-text">
+                2026 優雅首選。全包式豪華露營，有暖氣、有管家。在舒適的帳篷內透過觀景窗欣賞星河移動。
+            </p>
+
+            <div class="action-buttons">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=桃樂絲露營區" target="_blank" class="btn-action btn-map">📍 導航去</a>
+                <a href="https://www.dorothycamp.com.tw/" target="_blank" class="btn-action btn-web">🔗 官方網站</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-img-top">
+            <img src="https://www.camptrip.com.tw/wp-content/uploads/11-37.jpg" alt="忘憂小築">
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">忘憂小築</h2>
+            <div class="address-text">苗栗縣泰安鄉小南勢66之2號</div>
+            <div class="tags">
+                <span class="tag">泰安銀河</span>
+                <span class="tag">雲海曙光</span>
+                <span class="tag">極致視野</span>
+            </div>
+
+            <div class="map-container">
+                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.123456789!2d120.9100000!3d24.4500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34684b1234567890%3A0x1234567890abcdef!2z5bCP5Y2X5Yuj5bCP562J!5e0!3m2!1szh-TW!2stw!4v1672300000000!5m2!1szh-TW!2stw" loading="lazy"></iframe>
+            </div>
+
+            <p class="card-text">
+                離星星最近的地方。泰安高海拔，伸手摘星，清晨迎接 2026 第一道曙光。追求大景的唯一選擇。
+            </p>
+
+            <div class="action-buttons">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=忘憂小築休閒俱樂部" target="_blank" class="btn-action btn-map">📍 導航去</a>
+                <a href="https://www.wangucamping.com/" target="_blank" class="btn-action btn-web">🔗 官方網站</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
