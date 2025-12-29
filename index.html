@@ -682,9 +682,9 @@
             <p class="stat-note">依照 2025/12/31 09:30 行程時間計算</p>
         </div>
         <div class="stat">
-            <span class="label">山上預估體感</span>
+            <span class="label">山區預估體感</span>
             <div class="value" id="weatherData">抓取中...</div>
-            <p class="stat-note" id="weatherNote">來源：Open-Meteo · 苗栗泰安座標</p>
+            <p class="stat-note" id="weatherNote"></p>
             <span class="pulse-chip" id="weatherChip">高海拔 · 夜間保暖優先</span>
             <div class="live-status" id="rainStatus">降雨狀態偵測中...</div>
         </div>
@@ -832,6 +832,8 @@
     const burstStarsAlt = document.getElementById('burstStarsAlt');
     const tiltToggle = document.getElementById('tiltToggle');
     let tiltEnabled = true;
+    const targetElevation = 800; // meters above sea level
+    const lapseRate = 0.0065; // °C per meter (standard atmosphere)
 
     function updateCountdown() {
         const now = new Date();
@@ -854,7 +856,13 @@
             const data = await res.json();
             const cur = data.current;
             if (!cur) throw new Error('no data');
-            const temp = Math.round(cur.apparent_temperature);
+            const apparentTemp = Number(cur.apparent_temperature);
+            if (!Number.isFinite(apparentTemp)) throw new Error('temp missing');
+            const elevationFromApi = Number(data.elevation);
+            const baseElevation = Number.isFinite(elevationFromApi) ? elevationFromApi : targetElevation;
+            const elevationDiff = targetElevation - baseElevation;
+            const adjustedTemp = Math.round(apparentTemp - elevationDiff * lapseRate); // lapse rate adjustment
+            const baseTempRounded = Math.round(apparentTemp);
             const wind = Math.round(cur.wind_speed_10m);
             const rain = Number(cur.rain || 0);
             const precip = Number(cur.precipitation || 0);
@@ -862,9 +870,9 @@
             const rainingCodes = [51,53,55,56,57,61,63,65,66,67,80,81,82];
             const isRaining = rain > 0.02 || precip > 0.02 || rainingCodes.includes(wmo);
 
-            weatherEl.textContent = `${temp}°C · 風速 ${wind} m/s`;
-            weatherNoteEl.textContent = '來源：Open-Meteo · 苗栗泰安座標';
-            weatherChip.textContent = temp <= 5 ? '今晚很冷 · 羽絨+暖暖包' : '高海拔 · 夜間保暖優先';
+            weatherEl.textContent = `${adjustedTemp}°C  · 風速 ${wind} m/s`;
+            weatherNoteEl.textContent = `來源：Open-Meteo · 格點 ${baseTempRounded}°C @${Math.round(baseElevation)}m → 估算 ${targetElevation}m`;
+            weatherChip.textContent = adjustedTemp <= 5 ? '今晚很冷 · 羽絨+暖暖包' : '高海拔 · 夜間保暖優先';
 
             rainStatusEl.textContent = isRaining ? '目前有雨 · 留意路面溼滑' : '目前無雨 · 但山區變化快';
             rainStatusEl.classList.toggle('raining', isRaining);
