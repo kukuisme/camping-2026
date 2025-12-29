@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 星空跨年露營精選</title>
+    <title>忘憂小築 行前通知</title>
     <style>
-        /* --- 星空版 Apple 風格設定 --- */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap');
         :root {
             --bg-color-start: #0f0c29;
             --bg-color-mid: #302b63;
             --bg-color-end: #24243e;
-            
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1a6;
-            --link-blue: #2997ff;
-            
-            /* 玻璃擬態卡片設定 */
-            --card-glass-bg: rgba(40, 40, 55, 0.65);
-            --card-border: 1px solid rgba(255, 255, 255, 0.15);
+            --text-primary: #f7f8ff;
+            --text-secondary: #d2d2dd;
+            --link-blue: #7dd3ff;
+            --accent-amber: #ffb347;
+            --neon-pink: #ff6bcb;
+            --neon-cyan: #55d2ff;
+            --card-glass-bg: rgba(25, 25, 40, 0.82);
+            --card-border: 1px solid rgba(255, 255, 255, 0.22);
             --card-shadow: 0 25px 50px rgba(0,0,0, 0.5);
-            --blur-effect: blur(20px) saturate(180%);
+            --blur-effect: blur(16px) saturate(180%);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
             background: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-mid), var(--bg-color-end));
             min-height: 100vh;
             margin: 0;
-            padding: 60px 20px;
+            padding: 70px 20px 80px;
             color: var(--text-primary);
             line-height: 1.47059;
             letter-spacing: -0.022em;
+            position: relative;
+            overflow-x: hidden;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            background-size: 240% 240%;
+            animation: gradientShift 24s ease infinite;
             background-image: 
                 radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px),
                 radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px),
@@ -39,39 +45,186 @@
             background-position: 0 0, 40px 60px, 130px 270px;
         }
 
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -10%;
+            background: radial-gradient(circle at 20% 20%, rgba(255,107,203,0.15), transparent 35%),
+                        radial-gradient(circle at 80% 10%, rgba(85,210,255,0.16), transparent 30%),
+                        radial-gradient(circle at 50% 80%, rgba(255,179,71,0.16), transparent 32%);
+            filter: blur(30px);
+            opacity: 0.35;
+            pointer-events: none;
+            animation: floatGlow 18s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, transparent 12%, transparent 88%, rgba(255,255,255,0.06) 100%);
+            mix-blend-mode: screen;
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #sparkles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 2;
+            mix-blend-mode: screen;
+        }
+
         header {
             text-align: center;
-            margin-bottom: 70px;
-            max-width: 800px;
+            margin-bottom: 60px;
+            max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
+            padding: 26px 28px 28px;
+            background: rgba(7, 9, 18, 0.65);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 26px;
+            box-shadow: 0 22px 50px rgba(0,0,0,0.45), 0 0 28px rgba(125,211,255,0.12);
+            backdrop-filter: blur(16px);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
         }
 
         h1 {
-            font-size: 56px;
+            font-size: 52px;
             font-weight: 800;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #ffffff, #b3c6ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(179, 198, 255, 0.5);
+            margin: 14px 0 10px;
+            color: #e9eeff;
+            text-shadow: 0 8px 22px rgba(0,0,0,0.45), 0 0 18px rgba(125,211,255,0.16);
         }
 
         p.subtitle {
-            color: var(--text-secondary);
-            font-size: 24px;
+            color: #f0f4ff;
+            font-size: 22px;
             font-weight: 400;
+            margin: 0 0 14px 0;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-note {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: rgba(9, 11, 22, 0.7);
+            border: 1px solid rgba(125,211,255,0.32);
+            color: #f6f8ff;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.5);
         }
 
         .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 3;
         }
 
-        /* --- 卡片設計 --- */
+        .highlight-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            background: linear-gradient(150deg, rgba(12, 16, 32, 0.78), rgba(24, 28, 48, 0.7));
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 20px;
+            padding: 18px 20px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.5), 0 0 42px rgba(113,163,255,0.18);
+            backdrop-filter: blur(14px);
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .stat .label {
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            color: rgba(223,227,243,0.78);
+        }
+
+        .stat .value {
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #f9fbff;
+            text-shadow: 0 6px 18px rgba(0,0,0,0.45);
+        }
+
+        .stat-note {
+            margin: 2px 0 0;
+            color: rgba(223,227,243,0.78);
+            font-size: 13px;
+        }
+
+        .pulse-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255,107,203,0.18), rgba(85,210,255,0.2));
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 8px 18px rgba(255,107,203,0.35);
+            border: 1px solid rgba(255,255,255,0.2);
+            width: fit-content;
+            animation: pulse 2.8s ease-in-out infinite;
+        }
+
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-ghost {
+            border: 1px solid rgba(255,255,255,0.32);
+            background: rgba(255,255,255,0.12);
+            color: #f9fbff;
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ghost.secondary {
+            border-color: rgba(125,211,255,0.5);
+            background: linear-gradient(135deg, rgba(125,211,255,0.12), rgba(48,43,99,0.8));
+        }
+
+        .btn-ghost:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.35), 0 0 18px rgba(125,211,255,0.35);
+        }
+
         .card {
             background-color: var(--card-glass-bg);
             backdrop-filter: var(--blur-effect);
@@ -83,10 +236,10 @@
             display: flex;
             flex-direction: column;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transform-style: preserve-3d;
         }
 
         .card:hover {
-            transform: translateY(-10px) scale(1.02);
             box-shadow: 0 35px 70px rgba(0,0,0, 0.6), 0 0 20px rgba(100, 150, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             z-index: 10;
@@ -94,7 +247,7 @@
 
         .card-img-top {
             width: 100%;
-            height: 250px;
+            height: 280px;
             background-color: rgba(0,0,0,0.3);
             position: relative;
             overflow: hidden;
@@ -108,7 +261,7 @@
         }
         
         .card:hover img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .card-body {
@@ -116,22 +269,23 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            gap: 12px;
         }
 
         .card-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0 0 10px 0;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 6px 0 0 0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .address-text {
             font-size: 14px;
-            color: #d1d1d6;
-            margin-bottom: 15px;
+            color: rgba(247,249,255,0.9);
+            margin: 0 0 10px 0;
             display: flex;
             align-items: center;
-            opacity: 0.8;
+            opacity: 0.92;
         }
         
         .address-text::before {
@@ -140,38 +294,36 @@
         }
 
         .tags {
-            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 4px;
         }
 
         .tag {
             display: inline-block;
             background-color: rgba(255, 255, 255, 0.15);
             color: #ffffff;
-            padding: 5px 10px;
-            border-radius: 8px;
+            padding: 6px 10px;
+            border-radius: 10px;
             font-size: 12px;
             font-weight: 600;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            backdrop-filter: blur(5px);
             border: 1px solid rgba(255,255,255,0.1);
         }
 
         .card-text {
             font-size: 16px;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 25px;
-            flex-grow: 1; /* 讓文字區塊填滿空間，保持按鈕在底部對齊 */
+            color: rgba(247, 249, 255, 0.96);
+            margin: 4px 0 10px 0;
         }
 
-        /* --- 地圖樣式 --- */
         .map-container {
             width: 100%;
-            height: 180px;
+            height: 200px;
             border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 20px;
+            margin: 4px 0 16px 0;
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
             background: #2c2c2e;
@@ -189,18 +341,17 @@
             filter: grayscale(0%) contrast(100%);
         }
 
-        /* --- 按鈕區 --- */
         .action-buttons {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: auto; /* 將按鈕推到底部 */
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: auto;
         }
 
         .btn-action {
             text-decoration: none;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 700;
             padding: 12px;
             border-radius: 14px;
             display: flex;
@@ -234,74 +385,251 @@
             box-shadow: 0 6px 15px rgba(41, 151, 255, 0.4);
         }
 
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background-color: rgba(30, 30, 45, 0.86);
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            padding: 22px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+            backdrop-filter: blur(16px);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin: 0 0 14px 0;
+            color: #f2f2f7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: "✦";
+            color: var(--link-blue);
+            font-size: 16px;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .mood-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 10px 12px;
+        }
+
+        .meter {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin: 6px 0 4px;
+        }
+
+        .meter-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--link-blue));
+            box-shadow: 0 0 16px rgba(125,211,255,0.45);
+        }
+
+        .meter-note {
+            margin: 0;
+            color: rgba(255,255,255,0.82);
+            font-size: 13px;
+        }
+
+        .timeline {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .timeline li {
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 14px;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.07);
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 10px;
+            align-items: start;
+        }
+
+        .time {
+            color: var(--accent-amber);
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .timeline p {
+            margin: 0;
+            color: rgba(247,249,255,0.96);
+            line-height: 1.55;
+        }
+
+        .checklist, .note-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+        }
+
+        .checklist li, .note-list li {
+            position: relative;
+            padding: 10px 12px 10px 32px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.14);
+            color: rgba(247,249,255,0.96);
+            line-height: 1.5;
+        }
+
+        .checklist li::before {
+            content: "✔";
+            position: absolute;
+            left: 12px;
+            color: var(--link-blue);
+            font-weight: 700;
+        }
+
+        .note-list li::before {
+            content: "!";
+            position: absolute;
+            left: 12px;
+            color: var(--accent-amber);
+            font-weight: 800;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 10px;
+        }
+
+        .contact-item {
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .value {
+            color: rgba(255,255,255,0.95);
+            font-weight: 600;
+        }
+
+        .callout {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.08);
+            border: 1px dashed rgba(255,255,255,0.2);
+            color: #e5e5ea;
+        }
+
+        .hyper-mode {
+            background-position: 50% 50%;
+        }
+
+        .hyper-mode::before {
+            opacity: 1;
+        }
+
+        .hyper-mode .card {
+            border-color: rgba(125,211,255,0.35);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.65), 0 0 28px rgba(125,211,255,0.35);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate3d(0,0,0) scale(1); }
+            50% { transform: translate3d(-10px, 12px, 0) scale(1.05); }
+            100% { transform: translate3d(8px, -10px, 0) scale(1.02); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 8px 18px rgba(255,107,203,0.35); opacity: 1; }
+            50% { box-shadow: 0 12px 32px rgba(125,211,255,0.35); opacity: 0.92; }
+        }
+
+        @keyframes sparkleFall {
+            0% { transform: translateY(-10vh) scale(0.6); opacity: 0; }
+            15% { opacity: 1; }
+            100% { transform: translateY(110vh) scale(1); opacity: 0; }
+        }
+
         @media (max-width: 768px) {
             body { padding: 40px 15px; }
-            h1 { font-size: 36px; }
-            .card-img-top { height: 200px; }
+            h1 { font-size: 38px; }
+            .card-img-top { height: 220px; }
+            .timeline li { grid-template-columns: 1fr; }
+            .time { display: block; }
+            .highlight-panel { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-
+<div id="sparkles"></div>
 <header>
-    <h1>飛越2025 迎接 2026</h1>
-    <p class="subtitle">在 2025 的最後一夜，<br>哪裡是我們迎接新年的最佳起點？</p>
+    <div class="badge">最終選擇 · 忘憂小築</div>
+    <h1>忘憂小築 行前通知</h1>
+    <p class="subtitle">2025/12/31 - 2026/01/01 高山星空跨年 · 只保留這一站</p>
+    <div class="hero-note">行程與現場資訊請以此頁為主，保持手機定位。</div>
 </header>
 
 <div class="container">
 
-    <div class="card">
-        <div class="card-img-top">
-            <img src="https://www.camptrip.com.tw/wp-content/uploads/ewqerfc.jpg" alt="小份美營地">
+    <div class="highlight-panel">
+        <div class="stat">
+            <span class="label">距離出發</span>
+            <div class="value" id="countdown">--</div>
+            <p class="stat-note">依照 2025/12/31 09:30 行程時間計算</p>
         </div>
-        <div class="card-body">
-            <h2 class="card-title">小份美營地</h2>
-            <div class="address-text">苗栗縣三灣鄉內灣村小份美20-1號</div>
-            <div class="tags">
-                <span class="tag">星空派對</span>
-                <span class="tag">低海拔</span>
-                <span class="tag">輕鬆跨年</span>
-            </div>
-            
-            <div class="map-container">
-                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3611.838531278189!2d120.9508056!3d24.6704444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346851e3e0c0a8e1%3A0x1c8b3f8f1c8b3f8f!2z5bCP5Lu9576O6Ie_54ef5Y2A!5e0!3m2!1szh-TW!2stw!4v1672300000000!5m2!1szh-TW!2stw" loading="lazy"></iframe>
-            </div>
-
-            <p class="card-text">
-                位於低海拔，交通最輕鬆。寬廣的大草皮適合圍著營火、仰望星空倒數，舉辦溫馨的跨年派對。
-            </p>
-            
-            <div class="action-buttons">
-                <a href="https://www.google.com/maps/dir/?api=1&destination=小份美營地" target="_blank" class="btn-action btn-map">📍 導航去</a>
-                <a href="https://booking.camptrip.com.tw/hotel/%E5%B0%8F%E4%BB%BD%E7%BE%8E%E7%87%9F%E5%9C%B0" target="_blank" class="btn-action btn-web">🔗 立即訂位</a>
-            </div>
+        <div class="stat">
+            <span class="label">山上預估體感</span>
+            <div class="value" id="weatherData">抓取中...</div>
+            <p class="stat-note" id="weatherNote">來源：Open-Meteo · 苗栗泰安座標</p>
+            <span class="pulse-chip" id="weatherChip">高海拔 · 夜間保暖優先</span>
         </div>
-    </div>
-
-    <div class="card">
-        <div class="card-img-top">
-            <img src="https://res.klook.com/image/upload/w_1265,h_791,c_fill,q_85/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/iwmpt8xifah0tveiw0ju.webp" alt="桃樂絲露營區">
-        </div>
-        <div class="card-body">
-            <h2 class="card-title">桃樂絲露營區</h2>
-            <div class="address-text">苗栗縣公館鄉尖山40之5號</div>
-            <div class="tags">
-                <span class="tag">奢華觀星</span>
-                <span class="tag">暖氣帳篷</span>
-                <span class="tag">優雅跨年</span>
-            </div>
-
-            <div class="map-container">
-                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.123456789!2d120.8400000!3d24.5500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34684a1234567890%3A0x1234567890abcdef!2z5qGD5qCC577y6Ie_54ef5Y2A!5e0!3m2!1szh-TW!2stw!4v1672300000000!5m2!1szh-TW!2stw" loading="lazy"></iframe>
-            </div>
-
-            <p class="card-text">
-                2026 優雅首選。全包式豪華露營，有暖氣、有管家。在舒適的帳篷內透過觀景窗欣賞星河移動。
-            </p>
-
-            <div class="action-buttons">
-                <a href="https://www.google.com/maps/dir/?api=1&destination=桃樂絲露營區" target="_blank" class="btn-action btn-map">📍 導航去</a>
-                <a href="https://www.dorothycamp.com.tw/" target="_blank" class="btn-action btn-web">🔗 官方網站</a>
+        <div class="stat">
+            <span class="label">互動模式</span>
+            <div class="control-buttons">
+                <button class="btn-ghost" id="glowToggle">點亮霓虹</button>
+                <button class="btn-ghost secondary" id="burstStars">釋放星光</button>
             </div>
         </div>
     </div>
@@ -311,30 +639,226 @@
             <img src="https://www.camptrip.com.tw/wp-content/uploads/11-37.jpg" alt="忘憂小築">
         </div>
         <div class="card-body">
+            <div class="tags">
+                <span class="tag">最終目的地</span>
+                <span class="tag">高海拔</span>
+                <span class="tag">跨年主場</span>
+            </div>
             <h2 class="card-title">忘憂小築</h2>
             <div class="address-text">苗栗縣泰安鄉小南勢66之2號</div>
-            <div class="tags">
-                <span class="tag">泰安銀河</span>
-                <span class="tag">雲海曙光</span>
-                <span class="tag">極致視野</span>
-            </div>
-
+            <p class="card-text">
+                路線鎖定忘憂小築，山區彎多坡陡，務必提早出發並留意保暖。
+                
+            </p>
+            
             <div class="map-container">
                 <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.123456789!2d120.9100000!3d24.4500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34684b1234567890%3A0x1234567890abcdef!2z5bCP5Y2X5Yuj5bCP562J!5e0!3m2!1szh-TW!2stw!4v1672300000000!5m2!1szh-TW!2stw" loading="lazy"></iframe>
             </div>
 
-            <p class="card-text">
-                離星星最近的地方。泰安高海拔，伸手摘星，清晨迎接 2026 第一道曙光。追求大景的唯一選擇。
-            </p>
-
             <div class="action-buttons">
-                <a href="https://www.google.com/maps/dir/?api=1&destination=忘憂小築休閒俱樂部" target="_blank" class="btn-action btn-map">📍 導航去</a>
-                <a href="https://www.wangucamping.com/" target="_blank" class="btn-action btn-web">🔗 官方網站</a>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=忘憂小築休閒俱樂部" target="_blank" class="btn-action btn-map">📍 開導航</a>
+                <a href="https://www.wangucamping.com/" target="_blank" class="btn-action btn-web">🔗 營區資訊</a>
             </div>
         </div>
     </div>
 
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="section-title">行程節奏</div>
+            <ul class="timeline">
+                <li>
+                    <span class="time">12/31 09:30</span>
+                    <p>北部出發，油料補滿；山路彎多，預留充足車程。</p>
+                </li>
+                <li>
+                    <span class="time">12/31 12:30</span>
+                    <p>抵達營地報到、搭帳與整理營位，確認電力與水源位置。</p>
+                </li>
+                <li>
+                    <span class="time">12/31 18:00</span>
+                    <p>晚餐＋暖爐/炭火，注意火源安全與一氧化碳通風。</p>
+                </li>
+                <li>
+                    <span class="time">12/31 23:45</span>
+                    <p>星空倒數與拍照，保暖外套戴好，避免夜露受寒。</p>
+                </li>
+                <li>
+                    <span class="time">01/01 06:00</span>
+                    <p>看日出、早餐；若天候不佳改為輕鬆緩起。</p>
+                </li>
+                <li>
+                    <span class="time">01/01 10:30</span>
+                    <p>收帳離場，垃圾全帶走，確認車燈與煞車正常後下山。</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <div class="section-title">夜幕互動</div>
+            <div class="mood-grid">
+                <div class="mood-item">
+                    <span class="label">保暖指數</span>
+                    <div class="meter"><div class="meter-fill" style="width: 86%;"></div></div>
+                    <p class="meter-note">羽絨＋暖暖包＋頭燈待命，睡前檢查風向。</p>
+                </div>
+                <div class="mood-item">
+                    <span class="label">能見度</span>
+                    <div class="meter"><div class="meter-fill" style="width: 72%; background: linear-gradient(90deg, #55d2ff, #7dd3ff);"></div></div>
+                    <p class="meter-note">雲層偏薄，可衝星空或雲海，隨時看天氣。</p>
+                </div>
+                <div class="mood-item">
+                    <span class="label">安全緊繃度</span>
+                    <div class="meter"><div class="meter-fill" style="width: 64%; background: linear-gradient(90deg, #ffb347, #ff6b6b);"></div></div>
+                    <p class="meter-note">山路彎多坡陡，保持輪胎胎壓正常。</p>
+                </div>
+            </div>
+            <div class="control-buttons">
+                <button class="btn-ghost" id="tiltToggle">平穩模式</button>
+                <button class="btn-ghost secondary" id="burstStarsAlt">加碼流星雨</button>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="section-title">注意提醒</div>
+            <ul class="note-list">
+                <li>山區收訊不穩，出發前下載離線地圖並分享即時位置。</li>
+                <li>夜間溫差大，冷凝易起霧，行車請保持燈光與安全距離。</li>
+                <li>營區附近無大型超商，食材與燃料須在平地先備齊。</li>
+                <li>火源請離帳篷與車輛至少 3 公尺，睡前確認完全熄滅。</li>
+                <li>垃圾、廚餘、煙蒂全部帶走；走道保持暢通方便會車。</li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <div class="section-title">聯絡 / 資訊</div>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span class="label">導航關鍵字</span>
+                    <span class="value">「忘憂小築休閒俱樂部」</span>
+                </div>
+                <div class="contact-item">
+                    <span class="label">收訊</span>
+                    <span class="value">高海拔收訊時好時壞，群組定位保持開啟。</span>
+                </div>
+                <div class="contact-item">
+                    <span class="label">補給</span>
+                    <span class="value">下山方向最近才有超商，水與零食先準備好。</span>
+                </div>
+                <div class="contact-item">
+                    <span class="label">停車</span>
+                    <span class="value">依營主指示停放，車頭朝外方便下山。</span>
+                </div>
+            </div>
+            <div class="callout">若天氣或路況有變動，前一晚 21:00 在群組統一公告。</div>
+        </div>
+    </div>
 </div>
 
+<script>
+    const targetDate = new Date('2025-12-31T09:30:00+08:00');
+    const countdownEl = document.getElementById('countdown');
+    const sparkles = document.getElementById('sparkles');
+    const weatherEl = document.getElementById('weatherData');
+    const weatherNoteEl = document.getElementById('weatherNote');
+    const weatherChip = document.getElementById('weatherChip');
+    const glowToggle = document.getElementById('glowToggle');
+    const burstStars = document.getElementById('burstStars');
+    const burstStarsAlt = document.getElementById('burstStarsAlt');
+    const tiltToggle = document.getElementById('tiltToggle');
+    let tiltEnabled = true;
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+        if (diff <= 0) {
+            countdownEl.textContent = '準備出發！';
+            return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        countdownEl.textContent = `${days} 天 ${hours} 小時 ${minutes} 分`;
+    }
+
+    async function fetchWeather() {
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=24.45&longitude=120.91&current=temperature_2m,apparent_temperature,wind_speed_10m&timezone=Asia/Taipei';
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('network');
+            const data = await res.json();
+            const cur = data.current;
+            if (!cur) throw new Error('no data');
+            const temp = Math.round(cur.apparent_temperature);
+            const wind = Math.round(cur.wind_speed_10m);
+            weatherEl.textContent = `${temp}°C · 風速 ${wind} m/s`;
+            weatherNoteEl.textContent = '來源：Open-Meteo · 苗栗泰安座標';
+            weatherChip.textContent = temp <= 5 ? '今晚很冷 · 羽絨+暖暖包' : '高海拔 · 夜間保暖優先';
+        } catch (err) {
+            weatherEl.textContent = '暫時無法取得';
+            weatherNoteEl.textContent = '檢查網路或稍後再試';
+        }
+    }
+
+    function createSparkle() {
+        const span = document.createElement('span');
+        const size = Math.random() * 4 + 2;
+        span.style.position = 'absolute';
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.top = `${Math.random() * -20}%`;
+        span.style.width = `${size}px`;
+        span.style.height = `${size}px`;
+        span.style.borderRadius = '50%';
+        span.style.background = Math.random() > 0.5 ? 'rgba(255,107,203,0.9)' : 'rgba(125,211,255,0.9)';
+        span.style.boxShadow = `0 0 12px ${span.style.background}`;
+        span.style.animation = `sparkleFall ${6 + Math.random() * 4}s linear`;
+        span.style.opacity = '0.8';
+        sparkles.appendChild(span);
+        span.addEventListener('animationend', () => span.remove());
+    }
+
+    function burst(count = 22) {
+        for (let i = 0; i < count; i++) createSparkle();
+    }
+
+    function attachTilt() {
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (!tiltEnabled) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rotateY = ((x - rect.width / 2) / rect.width) * 12;
+                const rotateX = -((y - rect.height / 2) / rect.height) * 10;
+                card.style.transform = `perspective(1100px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateY(-4px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    }
+
+    glowToggle.addEventListener('click', () => {
+        document.body.classList.toggle('hyper-mode');
+        glowToggle.textContent = document.body.classList.contains('hyper-mode') ? '收斂霓虹' : '點亮霓虹';
+    });
+
+    burstStars.addEventListener('click', () => burst(26));
+    burstStarsAlt.addEventListener('click', () => burst(36));
+
+    tiltToggle.addEventListener('click', () => {
+        tiltEnabled = !tiltEnabled;
+        tiltToggle.textContent = tiltEnabled ? '平穩模式' : '恢復漂浮';
+        if (!tiltEnabled) {
+            document.querySelectorAll('.card').forEach(card => card.style.transform = '');
+        }
+    });
+
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+    fetchWeather();
+    setInterval(fetchWeather, 30 * 60 * 1000);
+    attachTilt();
+    burst(18);
+</script>
 </body>
 </html>
