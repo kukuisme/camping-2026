@@ -225,6 +225,81 @@
             box-shadow: 0 10px 24px rgba(0,0,0,0.35), 0 0 18px rgba(125,211,255,0.35);
         }
 
+        .live-card {
+            background: rgba(10, 12, 24, 0.75);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 22px;
+            padding: 18px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+            backdrop-filter: blur(14px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .live-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .live-title {
+            margin: 0;
+            color: #f5f7ff;
+            font-size: 22px;
+        }
+
+        .live-status {
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #f9fbff;
+            font-weight: 700;
+        }
+
+        .live-status.raining {
+            background: rgba(255,107,107,0.14);
+            border-color: rgba(255,107,107,0.3);
+        }
+
+        .live-frame {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.16);
+            background: rgba(0,0,0,0.4);
+            min-height: 260px;
+        }
+
+        .live-frame iframe, .live-frame video {
+            width: 100%;
+            height: 360px;
+            border: 0;
+            display: block;
+        }
+
+        .live-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(240,244,255,0.86);
+            background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(125,211,255,0.12));
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+        }
+
+        .live-note {
+            margin: 0;
+            color: rgba(223,227,243,0.8);
+            font-size: 13px;
+        }
+
         .card {
             background-color: var(--card-glass-bg);
             backdrop-filter: var(--blur-effect);
@@ -624,6 +699,7 @@
             <div class="value" id="weatherData">抓取中...</div>
             <p class="stat-note" id="weatherNote">來源：Open-Meteo · 苗栗泰安座標</p>
             <span class="pulse-chip" id="weatherChip">高海拔 · 夜間保暖優先</span>
+            <div class="live-status" id="rainStatus">降雨狀態偵測中...</div>
         </div>
         <div class="stat">
             <span class="label">互動模式</span>
@@ -633,6 +709,8 @@
             </div>
         </div>
     </div>
+
+    
 
     <div class="card">
         <div class="card-img-top">
@@ -761,6 +839,7 @@
     const weatherEl = document.getElementById('weatherData');
     const weatherNoteEl = document.getElementById('weatherNote');
     const weatherChip = document.getElementById('weatherChip');
+    const rainStatusEl = document.getElementById('rainStatus');
     const glowToggle = document.getElementById('glowToggle');
     const burstStars = document.getElementById('burstStars');
     const burstStarsAlt = document.getElementById('burstStarsAlt');
@@ -781,7 +860,7 @@
     }
 
     async function fetchWeather() {
-        const url = 'https://api.open-meteo.com/v1/forecast?latitude=24.45&longitude=120.91&current=temperature_2m,apparent_temperature,wind_speed_10m&timezone=Asia/Taipei';
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=24.45&longitude=120.91&current=temperature_2m,apparent_temperature,wind_speed_10m,precipitation,rain,weather_code&timezone=Asia/Taipei';
         try {
             const res = await fetch(url);
             if (!res.ok) throw new Error('network');
@@ -790,12 +869,22 @@
             if (!cur) throw new Error('no data');
             const temp = Math.round(cur.apparent_temperature);
             const wind = Math.round(cur.wind_speed_10m);
+            const rain = Number(cur.rain || 0);
+            const precip = Number(cur.precipitation || 0);
+            const wmo = cur.weather_code;
+            const rainingCodes = [51,53,55,56,57,61,63,65,66,67,80,81,82];
+            const isRaining = rain > 0.02 || precip > 0.02 || rainingCodes.includes(wmo);
+
             weatherEl.textContent = `${temp}°C · 風速 ${wind} m/s`;
             weatherNoteEl.textContent = '來源：Open-Meteo · 苗栗泰安座標';
             weatherChip.textContent = temp <= 5 ? '今晚很冷 · 羽絨+暖暖包' : '高海拔 · 夜間保暖優先';
+
+            rainStatusEl.textContent = isRaining ? '目前有雨 · 留意路面溼滑' : '目前無雨 · 但山區變化快';
+            rainStatusEl.classList.toggle('raining', isRaining);
         } catch (err) {
             weatherEl.textContent = '暫時無法取得';
             weatherNoteEl.textContent = '檢查網路或稍後再試';
+            rainStatusEl.textContent = '雨況暫時無法取得';
         }
     }
 
